@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:tips_calculator/pages/homepage.dart';
@@ -5,9 +7,16 @@ import 'package:tips_calculator/pages/settingspage.dart';
 import 'package:tips_calculator/pages/staffsettingspage.dart';
 import 'package:tips_calculator/pages/tipshistorypage.dart';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
