@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/widgets/staffcard.dart';
 
 import '../models/staffmodel.dart';
 import '../providers/databaseproviders.dart';
@@ -27,14 +28,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                     itemCount: staffArray.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index < staffArray.length) {
-                        return ListTile(
-                            leading: const Icon(Icons.list),
-                            trailing: const Text(
-                              "GFG",
-                              style:
-                                  TextStyle(color: Colors.green, fontSize: 15),
-                            ),
-                            title: Text("List item $index"));
+                        return StaffCard(staff: staffArray[index]);
                       } else {
                         return TextButton(
                             style: ButtonStyle(
