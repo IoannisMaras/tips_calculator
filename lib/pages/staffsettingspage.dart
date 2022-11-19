@@ -28,7 +28,10 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                     itemCount: staffArray.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index < staffArray.length) {
-                        return StaffCard(staff: staffArray[index]);
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: StaffCard(staff: staffArray[index]),
+                        );
                       } else {
                         return TextButton(
                             style: ButtonStyle(
@@ -54,7 +57,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                               ref
                                   .read(staffArrayNotifierProvider.notifier)
                                   .addStaff(StaffModel(
-                                      name: "test1", weight: 1.77, iconId: 2));
+                                      name: "test1", weight: 1.77, iconId: 7));
                             },
                             child: const Text('Add Staff'));
                       }
