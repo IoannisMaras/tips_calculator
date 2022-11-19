@@ -20,23 +20,39 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE staff(
-      id INTEGER PRIMARY KEY
-      name TEXT
-      weight REAL
-      iconId INTEGER
+        CREATE TABLE staff(
+          staff_id INTEGER PRIMARY KEY,
+          name TEXT,
+          weight REAL,
+          icon_id INTEGER
 
-    )
-''');
+        )
+    ''');
+
+    await db.execute('''
+        CREATE TABLE tipshistory(
+          tips_history_id INTEGER PRIMARY KEY,
+          total_value REAL,
+          people_count INTEGER,
+          date TEXT
+
+        )
+    ''');
   }
 
   Future<List<StaffModel>> getAllStaffModels() async {
     Database db = await instance.databse;
 
-    var staff = await db.query('staff', orderBy: 'id');
+    var staff = await db.query('staff', orderBy: 'staff_id');
     List<StaffModel> staffList = staff.isNotEmpty
         ? staff.map((e) => StaffModel.fromMap(e)).toList()
         : [];
     return staffList;
+  }
+
+  Future<int> addStaff(StaffModel staff) async {
+    Database db = await instance.databse;
+
+    return await db.insert("staff", staff.toMap());
   }
 }

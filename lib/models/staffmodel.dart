@@ -11,12 +11,12 @@ class StaffModel {
       required this.iconId});
 
   factory StaffModel.fromMap(Map<String, dynamic> json) => StaffModel(
-      id: json['id'],
+      id: json['staff_id'],
       name: json['name'],
       weight: json['weight'],
-      iconId: json['iconId']);
+      iconId: json['icon_id']);
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'name': name, 'weight': weight, 'iconId': iconId};
+    return {'staff_id': id, 'name': name, 'weight': weight, 'icon_id': iconId};
   }
 }
