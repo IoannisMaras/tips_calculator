@@ -47,13 +47,21 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                                   backgroundColor: const Color(0xFF333366),
                                   foregroundColor: Colors.white,
                                   onPressed: () {
-                                    ref
-                                        .read(
-                                            staffArrayNotifierProvider.notifier)
-                                        .addStaff(StaffModel(
-                                            name: "test1",
-                                            weight: 1.7,
-                                            iconId: 7));
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                            contentPadding: EdgeInsets.zero,
+                                            content: StatefulBuilder(
+                                                // You need this, notice the parameters below:
+                                                builder: (BuildContext context,
+                                                    StateSetter setState) {
+                                              return Container(
+                                                color: Colors.red,
+                                              );
+                                            }));
+                                      },
+                                    );
                                   },
                                 ),
                               ),
