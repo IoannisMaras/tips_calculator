@@ -30,36 +30,37 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                       if (index < staffArray.length) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: StaffCard(staff: staffArray[index]),
+                          child: StaffCard(
+                              staff: staffArray[index], cardIndex: index),
                         );
                       } else {
-                        return TextButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.hovered)) {
-                                    return Colors.white.withOpacity(0.04);
-                                  }
-
-                                  if (states.contains(MaterialState.focused) ||
-                                      states.contains(MaterialState.pressed)) {
-                                    return Colors.black.withOpacity(0.12);
-                                  }
-
-                                  return null; // Defer to the widget's default.
-                                },
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+                          child: Row(
+                            children: [
+                              Expanded(flex: 20, child: Container()),
+                              Expanded(
+                                flex: 16,
+                                child: FloatingActionButton.extended(
+                                  icon: const Icon(Icons.add),
+                                  label: const Text("Προσθήκη"),
+                                  backgroundColor: const Color(0xFF333366),
+                                  foregroundColor: Colors.white,
+                                  onPressed: () {
+                                    ref
+                                        .read(
+                                            staffArrayNotifierProvider.notifier)
+                                        .addStaff(StaffModel(
+                                            name: "test1",
+                                            weight: 1.7,
+                                            iconId: 7));
+                                  },
+                                ),
                               ),
-                            ),
-                            onPressed: () {
-                              ref
-                                  .read(staffArrayNotifierProvider.notifier)
-                                  .addStaff(StaffModel(
-                                      name: "test1", weight: 1.77, iconId: 7));
-                            },
-                            child: const Text('Add Staff'));
+                              Expanded(flex: 13, child: Container()),
+                            ],
+                          ),
+                        );
                       }
                     });
               },

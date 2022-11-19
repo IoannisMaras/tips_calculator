@@ -76,10 +76,26 @@ class _MyHomePageState extends State<MyHomePage> {
             key: _bottomNavigationKey,
             height: 50,
             items: const <Widget>[
-              Icon(Icons.home, size: 30),
-              Icon(Icons.supervisor_account, size: 30),
-              Icon(Icons.list, size: 30),
-              Icon(Icons.settings, size: 30),
+              Icon(
+                Icons.home,
+                size: 30,
+                color: Color(0xFF333366),
+              ),
+              Icon(
+                Icons.supervisor_account,
+                size: 30,
+                color: Color(0xFF333366),
+              ),
+              Icon(
+                Icons.list,
+                size: 30,
+                color: Color(0xFF333366),
+              ),
+              Icon(
+                Icons.settings,
+                size: 30,
+                color: Color(0xFF333366),
+              ),
             ],
             onTap: (index) {
               setState(() {

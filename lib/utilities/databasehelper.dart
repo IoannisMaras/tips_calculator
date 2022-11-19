@@ -55,4 +55,11 @@ class DatabaseHelper {
 
     return await db.insert("staff", staff.toMap());
   }
+
+  Future<int> removeStaff(StaffModel staff) async {
+    Database db = await instance.databse;
+
+    return await db
+        .delete("staff", where: "staff_id = ?", whereArgs: [staff.id]);
+  }
 }

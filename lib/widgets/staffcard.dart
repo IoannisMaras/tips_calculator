@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 
-class StaffCard extends StatelessWidget {
-  const StaffCard({required this.staff});
+import '../providers/databaseproviders.dart';
+
+class StaffCard extends ConsumerWidget {
+  const StaffCard({required this.staff, required this.cardIndex});
 
   final StaffModel staff;
+  final int cardIndex;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
         Container(
@@ -31,33 +35,36 @@ class StaffCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  "test",
-                  style: TextStyle(color: Colors.white),
+                Text(
+                  staff.name,
+                  style: const TextStyle(color: Colors.white, fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  "Μονάδες :${staff.weight}",
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                   textAlign: TextAlign.center,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FloatingActionButton.extended(
-                      label: Text('EDIT'), // <-- Text
-                      backgroundColor: Colors.green.shade600,
-                      icon: Icon(
-                        // <-- Icon
-                        Icons.edit,
-                        size: 15.0,
-                      ),
-                      onPressed: () {},
+                    FloatingActionButton(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      onPressed: () => {},
+                      mini: true,
+                      child: const Icon(Icons.edit),
                     ),
-                    FloatingActionButton.extended(
-                      label: Text('DELETE'), // <-- Text
-                      backgroundColor: Colors.red.shade600,
-                      icon: Icon(
-                        // <-- Icon
-                        Icons.edit,
-                        size: 15.0,
-                      ),
-                      onPressed: () {},
+                    FloatingActionButton(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      onPressed: () => {
+                        ref
+                            .read(staffArrayNotifierProvider.notifier)
+                            .removeStaff(staff, cardIndex)
+                      },
+                      mini: true,
+                      child: const Icon(Icons.delete),
                     ),
                   ],
                 )
