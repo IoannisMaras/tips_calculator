@@ -6,6 +6,8 @@ import '../models/staffmodel.dart';
 import '../providers/databaseproviders.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../widgets/newstaffalert.dart';
+
 class StaffSettingsPage extends ConsumerStatefulWidget {
   StaffSettingsPage({Key? key}) : super(key: key);
 
@@ -50,16 +52,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return AlertDialog(
-                                            contentPadding: EdgeInsets.zero,
-                                            content: StatefulBuilder(
-                                                // You need this, notice the parameters below:
-                                                builder: (BuildContext context,
-                                                    StateSetter setState) {
-                                              return Container(
-                                                color: Colors.red,
-                                              );
-                                            }));
+                                        return NewStaffAlert();
                                       },
                                     );
                                   },

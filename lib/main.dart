@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        colorSchemeSeed: const Color.fromRGBO(179, 136, 255, 1),
+        useMaterial3: true,
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         backgroundColor: const Color.fromRGBO(179, 136, 255, 1),
-        primaryColor: Colors.white,
+        //primaryColor: Colors.white,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -69,8 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: const Color.fromRGBO(179, 136, 255, 1),
           extendBody: true,
+          appBar: AppBar(
+            title: Text("Φιλοδωρίματα"),
+          ),
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: Colors.transparent,
             key: _bottomNavigationKey,
