@@ -108,7 +108,9 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                           label: const Text("Ακυρωση"),
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ],
                     ),

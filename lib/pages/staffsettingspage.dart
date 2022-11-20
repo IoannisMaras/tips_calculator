@@ -50,6 +50,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                                   foregroundColor: Colors.white,
                                   onPressed: () {
                                     showDialog(
+                                      barrierDismissible: false,
                                       context: context,
                                       builder: (context) {
                                         return NewStaffAlert();

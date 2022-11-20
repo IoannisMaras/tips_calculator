@@ -75,7 +75,30 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: const Color.fromRGBO(179, 136, 255, 1),
           extendBody: true,
           appBar: AppBar(
-            title: Text("Φιλοδωρίματα"),
+            title: Row(
+              children: [
+                const Flexible(
+                    child: Text(
+                  "Φιλοδωρίματα ",
+                  style: TextStyle(color: Color(0xFF333366)),
+                )),
+                Flexible(
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    height: 40.0,
+                    width: 40.0,
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.question_mark,
+                    color: Color(0xFF333366),
+                  ))
+            ],
           ),
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: Colors.transparent,
