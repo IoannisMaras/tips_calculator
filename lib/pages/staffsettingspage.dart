@@ -72,7 +72,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
               loading: () => Center(
                 child: LoadingAnimationWidget.threeRotatingDots(
                   color: Colors.white,
-                  size: 200,
+                  size: 100,
                 ),
               ),
             ),

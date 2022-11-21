@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 const Flexible(
                     child: Text(
-                  "Φιλοδωρίματα ",
+                  "Φιλοδωρήματα ",
                   style: TextStyle(color: Color(0xFF333366)),
                 )),
                 Flexible(
