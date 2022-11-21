@@ -24,7 +24,7 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
   }
 
   Future<void> _retrieveStaff() async {
-    await Future.delayed(Duration(seconds: 5));
+    //await Future.delayed(const Duration(seconds: 1));
     try {
       final staffArray = await DatabaseHelper.instance.getAllStaffModels();
       state = AsyncValue.data(staffArray);
