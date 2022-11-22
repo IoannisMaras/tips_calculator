@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:tips_calculator/providers/badgeprovider.dart';
 
 import '../utilities/databaseHelper.dart';
 import '../models/staffmodel.dart';
@@ -11,13 +11,16 @@ import '../models/staffmodel.dart';
 final staffArrayNotifierProvider =
     StateNotifierProvider<StaffArrayNotifier, AsyncValue<List<StaffModel>>>(
         (ref) {
-  return StaffArrayNotifier();
+  return StaffArrayNotifier(ref);
 });
 
 class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
   AsyncValue<List<StaffModel>>? previousState;
 
-  StaffArrayNotifier([
+  final Ref ref;
+
+  StaffArrayNotifier(
+    this.ref, [
     AsyncValue<List<StaffModel>>? staffArray,
   ]) : super(staffArray ?? const AsyncValue.loading()) {
     _retrieveStaff();
@@ -28,6 +31,7 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
     try {
       final staffArray = await DatabaseHelper.instance.getAllStaffModels();
       state = AsyncValue.data(staffArray);
+      ref.read(badgeValueProvider.notifier);
     } catch (e, st) {
       _resetState();
       state = AsyncValue.error(e, st);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tips_calculator/models/badgevaluemodel.dart';
 
 import '../models/staffmodel.dart';
 import '../providers/databaseproviders.dart';
@@ -14,14 +15,18 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  List<BadgeValueModel> badgeValues = [];
+
   @override
   Widget build(BuildContext context) {
+    badgeValues = [];
+
     AsyncValue<List<StaffModel>> staffProvider =
         ref.watch(staffArrayNotifierProvider);
     return Column(
       children: [
         const Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: EdgeInsets.all(2.0),
           child: Text(
             "Συνολικό ποσό",
             style: TextStyle(color: Color(0xFF333366), fontSize: 32),
@@ -97,6 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: ListView.builder(
                   itemCount: staffArray.length,
                   itemBuilder: (BuildContext context, int index) {
+                    badgeValues.add(BadgeValueModel(index));
                     return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -124,7 +130,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 FloatingActionButton(
                                   backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
-                                  onPressed: () => {},
+                                  onPressed: () => {
+                                    setState(() {
+                                      badgeValues[index].value++;
+                                    })
+                                  },
                                   mini: false,
                                   child: const Icon(Icons.add),
                                 ),
@@ -134,11 +144,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                               animationType: BadgeAnimationType.scale,
                               position:
                                   BadgePosition.topEnd(top: -12, end: -10),
-                              badgeContent: const Padding(
-                                padding: EdgeInsets.all(3.0),
+                              badgeContent: Padding(
+                                padding: const EdgeInsets.all(3.0),
                                 child: Text(
-                                  '3',
-                                  style: TextStyle(
+                                  badgeValues[index].value.toString(),
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),
                               ),
