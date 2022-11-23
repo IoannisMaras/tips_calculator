@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:tips_calculator/models/badgevaluemodel.dart';
 
 import '../models/staffmodel.dart';
+import '../providers/badgeprovider.dart';
 import '../providers/databaseproviders.dart';
 import 'package:badges/badges.dart';
 
@@ -15,14 +15,13 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  List<BadgeValueModel> badgeValues = [];
-
   @override
   Widget build(BuildContext context) {
-    badgeValues = [];
-
     AsyncValue<List<StaffModel>> staffProvider =
         ref.watch(staffArrayNotifierProvider);
+
+    Map<int, int> badgeValueArrayProvider = ref.watch(badgeValueProvider);
+
     return Column(
       children: [
         const Padding(
@@ -102,7 +101,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: ListView.builder(
                   itemCount: staffArray.length,
                   itemBuilder: (BuildContext context, int index) {
-                    badgeValues.add(BadgeValueModel(index));
                     return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -113,7 +111,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 FloatingActionButton(
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
-                                  onPressed: () => {},
+                                  onPressed: () => {
+                                    ref
+                                        .read(badgeValueProvider.notifier)
+                                        .decValue(staffArray[index].id as int)
+                                  },
                                   mini: false,
                                   child: const Icon(Icons.remove),
                                 ),
@@ -131,9 +133,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
                                   onPressed: () => {
-                                    setState(() {
-                                      badgeValues[index].value++;
-                                    })
+                                    ref
+                                        .read(badgeValueProvider.notifier)
+                                        .incValue(staffArray[index].id as int)
                                   },
                                   mini: false,
                                   child: const Icon(Icons.add),
@@ -141,13 +143,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ],
                             ),
                             Badge(
+                              toAnimate: true,
                               animationType: BadgeAnimationType.scale,
                               position:
                                   BadgePosition.topEnd(top: -12, end: -10),
                               badgeContent: Padding(
-                                padding: const EdgeInsets.all(3.0),
+                                padding: const EdgeInsets.all(0),
                                 child: Text(
-                                  badgeValues[index].value.toString(),
+                                  badgeValueArrayProvider[
+                                          staffArray[index].id as int]
+                                      .toString(),
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),

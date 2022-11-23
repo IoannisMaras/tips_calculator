@@ -1,6 +1,6 @@
 class BadgeValueModel {
   int id;
-  int value = 0;
+  int value;
 
-  BadgeValueModel(this.id);
+  BadgeValueModel(this.id, this.value);
 }

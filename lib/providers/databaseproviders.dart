@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/models/badgevaluemodel.dart';
 import 'package:tips_calculator/providers/badgeprovider.dart';
 
 import '../utilities/databaseHelper.dart';
@@ -27,11 +28,12 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
   }
 
   Future<void> _retrieveStaff() async {
-    //await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       final staffArray = await DatabaseHelper.instance.getAllStaffModels();
+      ref.read(badgeValueProvider.notifier).initList(staffArray);
       state = AsyncValue.data(staffArray);
-      ref.read(badgeValueProvider.notifier);
+      //
     } catch (e, st) {
       _resetState();
       state = AsyncValue.error(e, st);
@@ -40,11 +42,11 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
 
   Future<void> addStaff(StaffModel staff) async {
     _cacheState();
-
     try {
       int id = await DatabaseHelper.instance.addStaff(staff);
       StaffModel finalStaff = StaffModel(
           id: id, name: staff.name, weight: staff.weight, iconId: staff.iconId);
+      ref.read(badgeValueProvider.notifier).addBadge(finalStaff);
       state = state.whenData((staffArray) => [...staffArray, finalStaff]);
     } catch (e, st) {
       _resetState();
@@ -54,12 +56,16 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
 
   Future<void> removeStaff(StaffModel staff, int id) async {
     _cacheState();
+
+    ref.read(badgeValueProvider.notifier).removeBadge(staff.id as int);
     state = state.whenData(
       (value) => value.where((element) => element.id != staff.id).toList(),
     );
     try {
       await DatabaseHelper.instance.removeStaff(staff);
     } catch (e, st) {
+      _resetState();
+      ref.read(badgeValueProvider.notifier).addBadge(staff);
       state = AsyncValue.error(e, st);
     }
   }
