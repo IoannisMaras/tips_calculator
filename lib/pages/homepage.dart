@@ -68,15 +68,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               Expanded(
                 flex: 3,
                 child: FloatingActionButton.extended(
-                  icon: const Icon(Icons.restart_alt),
-                  label: const Text("Καθαρισμός"),
+                  icon: Icon(check ? Icons.restart_alt : Icons.undo),
+                  label: Text(check ? "Καθαρισμός" : "Επιστροφή"),
                   backgroundColor: const Color(0xFF333366),
                   foregroundColor: Colors.white,
-                  onPressed: () {
-                    setState(() {
-                      check = !check;
-                    });
-                  },
+                  onPressed: () {},
                 ),
               ),
               Expanded(child: Container()),
@@ -84,11 +80,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                 flex: 3,
                 //flex: 16,
                 child: FloatingActionButton.extended(
-                  icon: const Icon(Icons.check),
-                  label: const Text("Υπολογισμός"),
+                  icon: Icon(check ? Icons.check : Icons.save),
+                  label: Text(check ? "Υπολογισμός" : "Αποθήκευση"),
                   backgroundColor: const Color(0xFF333366),
                   foregroundColor: Colors.white,
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      check = !check;
+                    });
+                  },
                 ),
               ),
               Expanded(child: Container()),
