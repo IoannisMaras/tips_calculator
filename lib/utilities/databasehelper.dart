@@ -33,9 +33,17 @@ class DatabaseHelper {
         CREATE TABLE tipshistory(
           tips_history_id INTEGER PRIMARY KEY,
           total_value REAL,
-          people_count INTEGER,
-          date TEXT
+        )
+    ''');
 
+    await db.execute('''
+        CREATE TABLE tipshistory_details(
+          details_id INTEGER PRIMARY KEY,
+          tips_history_id INTEGER,
+          name TEXT,
+          count INTEGER,
+          value REAL
+          
         )
     ''');
   }
@@ -54,6 +62,13 @@ class DatabaseHelper {
     Database db = await instance.databse;
 
     return await db.insert("staff", staff.toMap());
+  }
+
+  Future<int> updateStaff(StaffModel staff) async {
+    Database db = await instance.databse;
+
+    return await db.update("staff", staff.toMap(),
+        where: "staff_id = ?", whereArgs: [staff.id]);
   }
 
   Future<int> removeStaff(StaffModel staff) async {

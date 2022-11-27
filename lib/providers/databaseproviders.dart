@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tips_calculator/models/badgevaluemodel.dart';
 import 'package:tips_calculator/providers/badgeprovider.dart';
 
 import '../utilities/databaseHelper.dart';
@@ -48,6 +47,29 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
           id: id, name: staff.name, weight: staff.weight, iconId: staff.iconId);
       ref.read(badgeValueProvider.notifier).addBadge(finalStaff);
       state = state.whenData((staffArray) => [...staffArray, finalStaff]);
+    } catch (e, st) {
+      _resetState();
+      state = AsyncValue.error(e, st);
+    }
+  }
+
+  Future<void> updateStaff(StaffModel uptadedStaff) async {
+    _cacheState();
+    try {
+      int id = await DatabaseHelper.instance.updateStaff(uptadedStaff);
+      state = state.whenData((staffArray) {
+        return [
+          for (final staff in staffArray)
+            if (staff.id == uptadedStaff.id)
+              StaffModel(
+                  id: uptadedStaff.id,
+                  name: uptadedStaff.name,
+                  weight: uptadedStaff.weight,
+                  iconId: uptadedStaff.iconId)
+            else
+              staff
+        ];
+      });
     } catch (e, st) {
       _resetState();
       state = AsyncValue.error(e, st);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
+import 'package:tips_calculator/widgets/editstaffalert.dart';
 
 import '../providers/databaseproviders.dart';
 
@@ -51,7 +52,15 @@ class StaffCard extends ConsumerWidget {
                     FloatingActionButton(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
-                      onPressed: () => {},
+                      onPressed: () => {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return EditStaffAlert(staff);
+                          },
+                        )
+                      },
                       mini: true,
                       child: const Icon(Icons.edit),
                     ),
