@@ -86,7 +86,8 @@ class DatabaseHelper {
   Future<List<TipsHistoryModel>> getAllTipsHistory() async {
     Database db = await instance.databse;
 
-    var tipsHistory = await db.query('tipshistory', orderBy: 'tips_history_id');
+    var tipsHistory = await db.query('tipshistory',
+        orderBy: 'tips_history_id DESC', limit: 15);
     List<TipsHistoryModel> tipsHistoryArray = tipsHistory.isNotEmpty
         ? tipsHistory.map((e) => TipsHistoryModel.fromMap(e)).toList()
         : [];
@@ -97,5 +98,16 @@ class DatabaseHelper {
     Database db = await instance.databse;
 
     return await db.insert("tipshistory", tipsHistory.toMap());
+  }
+
+  Future<List<TipsHistoryModel>> loadMoreTipsHistory(int offset) async {
+    Database db = await instance.databse;
+
+    var tipsHistory = await db.query('tipshistory',
+        orderBy: 'tips_history_id DESC', limit: 5, offset: offset);
+    List<TipsHistoryModel> tipsHistoryArray = tipsHistory.isNotEmpty
+        ? tipsHistory.map((e) => TipsHistoryModel.fromMap(e)).toList()
+        : [];
+    return tipsHistoryArray;
   }
 }

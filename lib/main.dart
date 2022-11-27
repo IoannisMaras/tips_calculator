@@ -3,9 +3,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:tips_calculator/pages/homepage.dart';
 import 'package:tips_calculator/pages/settingspage.dart';
 import 'package:tips_calculator/pages/staffsettingspage.dart';
-import 'package:tips_calculator/pages/tipshistorypage.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/pages/tipshistorypage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -49,6 +49,20 @@ class TipsHistoryArrayNotifier
     }
   }
 
+  Future<void> loadMoreTipsHistory(int offset) async {
+    _cacheState();
+    try {
+      List<TipsHistoryModel> finalTips =
+          await DatabaseHelper.instance.loadMoreTipsHistory(offset);
+
+      state = state
+          .whenData((tipsHistoryArray) => [...tipsHistoryArray, ...finalTips]);
+    } catch (e, st) {
+      _resetState();
+      state = AsyncValue.error(e, st);
+    }
+  }
+
   void _cacheState() {
     previousState = state;
   }
