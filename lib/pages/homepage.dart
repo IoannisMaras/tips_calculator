@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/models/tipshistorymodel.dart';
+import 'package:tips_calculator/providers/tipshistoryprovider.dart';
 import 'package:tips_calculator/widgets/listofpayments.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
 
@@ -85,9 +87,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                   backgroundColor: const Color(0xFF333366),
                   foregroundColor: Colors.white,
                   onPressed: () {
-                    setState(() {
-                      check = !check;
-                    });
+                    if (check) {
+                      setState(() {
+                        check = !check;
+                      });
+                    } else {
+                      ref
+                          .read(tipsHistoryArrayNotifierProvider.notifier)
+                          .addTipsHistory(TipsHistoryModel(
+                              value: _totalTips.text.isEmpty
+                                  ? 0
+                                  : double.parse(_totalTips.text),
+                              date: DateTime.now()));
+                    }
                   },
                 ),
               ),

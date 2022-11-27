@@ -83,17 +83,17 @@ class DatabaseHelper {
   }
 
   //----------------------TIPS_HISTORY-----------------------------
-  Future<List<TipsHistory>> getAllTipsHistory() async {
+  Future<List<TipsHistoryModel>> getAllTipsHistory() async {
     Database db = await instance.databse;
 
     var tipsHistory = await db.query('tipshistory', orderBy: 'tips_history_id');
-    List<TipsHistory> tipsHistoryArray = tipsHistory.isNotEmpty
-        ? tipsHistory.map((e) => TipsHistory.fromMap(e)).toList()
+    List<TipsHistoryModel> tipsHistoryArray = tipsHistory.isNotEmpty
+        ? tipsHistory.map((e) => TipsHistoryModel.fromMap(e)).toList()
         : [];
     return tipsHistoryArray;
   }
 
-  Future<int> addTipsHistory(TipsHistory tipsHistory) async {
+  Future<int> addTipsHistory(TipsHistoryModel tipsHistory) async {
     Database db = await instance.databse;
 
     return await db.insert("tipshistory", tipsHistory.toMap());

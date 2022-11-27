@@ -5,19 +5,19 @@ import '../utilities/databaseHelper.dart';
 import '../models/staffmodel.dart';
 
 final tipsHistoryArrayNotifierProvider = StateNotifierProvider<
-    TipsHistoryArrayNotifier, AsyncValue<List<TipsHistory>>>((ref) {
+    TipsHistoryArrayNotifier, AsyncValue<List<TipsHistoryModel>>>((ref) {
   return TipsHistoryArrayNotifier(ref);
 });
 
 class TipsHistoryArrayNotifier
-    extends StateNotifier<AsyncValue<List<TipsHistory>>> {
-  AsyncValue<List<TipsHistory>>? previousState;
+    extends StateNotifier<AsyncValue<List<TipsHistoryModel>>> {
+  AsyncValue<List<TipsHistoryModel>>? previousState;
 
   final Ref ref;
 
   TipsHistoryArrayNotifier(
     this.ref, [
-    AsyncValue<List<TipsHistory>>? staffArray,
+    AsyncValue<List<TipsHistoryModel>>? staffArray,
   ]) : super(staffArray ?? const AsyncValue.loading()) {
     _retrieveTipsHistory();
   }
@@ -35,12 +35,12 @@ class TipsHistoryArrayNotifier
     }
   }
 
-  Future<void> addStaff(TipsHistory tipsHistory) async {
+  Future<void> addTipsHistory(TipsHistoryModel tipsHistory) async {
     _cacheState();
     try {
       int id = await DatabaseHelper.instance.addTipsHistory(tipsHistory);
-      TipsHistory finalTips =
-          TipsHistory(id: id, value: tipsHistory.value, date: tipsHistory.date);
+      TipsHistoryModel finalTips = TipsHistoryModel(
+          id: id, value: tipsHistory.value, date: tipsHistory.date);
       state = state
           .whenData((tipsHistoryArray) => [...tipsHistoryArray, finalTips]);
     } catch (e, st) {

@@ -1,11 +1,11 @@
-class TipsHistory {
+class TipsHistoryModel {
   final int? id;
   final double value;
   final DateTime date;
 
-  TipsHistory({this.id, required this.value, required this.date});
+  TipsHistoryModel({this.id, required this.value, required this.date});
 
-  factory TipsHistory.fromMap(Map<String, dynamic> json) => TipsHistory(
+  factory TipsHistoryModel.fromMap(Map<String, dynamic> json) => TipsHistoryModel(
       id: json['tips_history_id'],
       value: json['total_value'],
       date: DateTime.parse(json['date']));
