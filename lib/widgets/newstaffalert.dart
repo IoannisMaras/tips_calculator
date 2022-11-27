@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/staffmodel.dart';
-import '../providers/databaseproviders.dart';
+import '../providers/staffarrayprovider.dart';
 
 class NewStaffAlert extends StatefulWidget {
   NewStaffAlert({Key? key}) : super(key: key);

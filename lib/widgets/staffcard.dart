@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 import 'package:tips_calculator/widgets/editstaffalert.dart';
 
-import '../providers/databaseproviders.dart';
+import '../providers/staffarrayprovider.dart';
 
 class StaffCard extends ConsumerWidget {
   const StaffCard({required this.staff, required this.cardIndex});

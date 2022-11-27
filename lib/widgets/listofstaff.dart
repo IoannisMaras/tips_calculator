@@ -5,7 +5,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../models/staffmodel.dart';
 import '../providers/badgeprovider.dart';
-import '../providers/databaseproviders.dart';
+import '../providers/staffarrayprovider.dart';
 
 class ListOfStaff extends ConsumerWidget {
   const ListOfStaff({Key? key}) : super(key: key);

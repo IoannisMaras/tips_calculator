@@ -5,6 +5,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 
+import '../models/tipshistorymodel.dart';
+
 class DatabaseHelper {
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -33,6 +35,7 @@ class DatabaseHelper {
         CREATE TABLE tipshistory(
           tips_history_id INTEGER PRIMARY KEY,
           total_value REAL,
+          date TEXT
         )
     ''');
 
@@ -48,6 +51,7 @@ class DatabaseHelper {
     ''');
   }
 
+  //----------------------STAFF-----------------------------
   Future<List<StaffModel>> getAllStaffModels() async {
     Database db = await instance.databse;
 
@@ -76,5 +80,22 @@ class DatabaseHelper {
 
     return await db
         .delete("staff", where: "staff_id = ?", whereArgs: [staff.id]);
+  }
+
+  //----------------------TIPS_HISTORY-----------------------------
+  Future<List<TipsHistory>> getAllTipsHistory() async {
+    Database db = await instance.databse;
+
+    var tipsHistory = await db.query('tipshistory', orderBy: 'tips_history_id');
+    List<TipsHistory> tipsHistoryArray = tipsHistory.isNotEmpty
+        ? tipsHistory.map((e) => TipsHistory.fromMap(e)).toList()
+        : [];
+    return tipsHistoryArray;
+  }
+
+  Future<int> addTipsHistory(TipsHistory tipsHistory) async {
+    Database db = await instance.databse;
+
+    return await db.insert("tipshistory", tipsHistory.toMap());
   }
 }

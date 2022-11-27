@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/staffmodel.dart';
-import '../providers/databaseproviders.dart';
+import '../providers/staffarrayprovider.dart';
 
 class EditStaffAlert extends StatefulWidget {
   final StaffModel staff;

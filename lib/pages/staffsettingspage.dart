@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/widgets/staffcard.dart';
 
 import '../models/staffmodel.dart';
-import '../providers/databaseproviders.dart';
+import '../providers/staffarrayprovider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../widgets/newstaffalert.dart';
