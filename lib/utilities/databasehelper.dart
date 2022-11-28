@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 
+import '../models/tipshistorydetailsmodel.dart';
 import '../models/tipshistorymodel.dart';
 
 class DatabaseHelper {
@@ -102,12 +103,25 @@ class DatabaseHelper {
 
   Future<List<TipsHistoryModel>> loadMoreTipsHistory(int offset) async {
     Database db = await instance.databse;
-
     var tipsHistory = await db.query('tipshistory',
         orderBy: 'tips_history_id DESC', limit: 5, offset: offset);
     List<TipsHistoryModel> tipsHistoryArray = tipsHistory.isNotEmpty
         ? tipsHistory.map((e) => TipsHistoryModel.fromMap(e)).toList()
         : [];
     return tipsHistoryArray;
+  }
+//-------------------------TIPS_HISTORY_DETAILS--------------------------
+
+  Future<List<TipsHistoryDetailsModel>> getTipsHistoryDetails(int id) async {
+    Database db = await instance.databse;
+    var tipsHistoryDetails = await db.query('tipshistory_details',
+        where: "tips_history_id = ?", whereArgs: [id], orderBy: 'details_id');
+    List<TipsHistoryDetailsModel> tipsHistoryDetailsArray =
+        tipsHistoryDetails.isNotEmpty
+            ? tipsHistoryDetails
+                .map((e) => TipsHistoryDetailsModel.fromMap(e))
+                .toList()
+            : [];
+    return tipsHistoryDetailsArray;
   }
 }
