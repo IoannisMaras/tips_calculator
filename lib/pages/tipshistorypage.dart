@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/tipshistorymodel.dart';
 
+import '../models/tipshistorydetailsmodel.dart';
+import '../providers/historydetailsprovider.dart';
 import '../providers/tipshistoryprovider.dart';
 
 class TipsHistoryPage extends StatefulWidget {
@@ -19,18 +21,17 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
     return Column(
       children: [
         Expanded(
+          flex: 2,
           child: Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
             AsyncValue<List<TipsHistoryModel>> tipsHistoryProvider =
                 ref.watch(tipsHistoryArrayNotifierProvider);
             return Container(
-              color: const Color.fromRGBO(179, 136, 255, 1),
+              color: const Color(0xFF333366),
               child: tipsHistoryProvider.when(data: ((tipsHistoryArray) {
                 return ListView.builder(
                   key: Key('builder ${selected.toString()}'), //attention
 
-                  padding:
-                      EdgeInsets.only(left: 13.0, right: 13.0, bottom: 25.0),
                   shrinkWrap: true,
                   // physics: NeverScrollableScrollPhysics(),
                   itemCount: tipsHistoryArray.length,
@@ -46,21 +47,24 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
             );
           }),
         ),
+        const Divider(
+          thickness: 15,
+          color: Colors.white,
+        ),
         Expanded(
           child: Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            AsyncValue<List<TipsHistoryModel>> tipsHistoryDetailsProvider =
-                ref.watch(tipsHistoryArrayNotifierProvider);
+            AsyncValue<List<TipsHistoryDetailsModel>>
+                tipsHistoryDetailsProvider = ref.watch(historyDetailsProvider);
             return tipsHistoryDetailsProvider.when(data: (historyDetailsArray) {
               return ListView.builder(
                 key: Key('builder ${selected.toString()}'), //attention
 
-                padding: EdgeInsets.only(left: 13.0, right: 13.0, bottom: 25.0),
                 shrinkWrap: true,
                 // physics: NeverScrollableScrollPhysics(),
                 itemCount: historyDetailsArray.length,
                 itemBuilder: (context, index) {
-                  return Text(historyDetailsArray[index].date.toString());
+                  return Text(historyDetailsArray[index].count.toString());
                 },
               );
             }, error: (e, st) {

@@ -29,6 +29,26 @@ class HistoryDetailsValueNotifier
     }
   }
 
+  Future<void> addTipsHistory(
+      TipsHistoryDetailsModel tipsHistoryDetails) async {
+    _cacheState();
+    try {
+      int id = await DatabaseHelper.instance
+          .addTipsHistoryDetails(tipsHistoryDetails);
+      TipsHistoryDetailsModel finalTipsDetails = TipsHistoryDetailsModel(
+          id: id,
+          tipsHistoryId: tipsHistoryDetails.tipsHistoryId,
+          name: tipsHistoryDetails.name,
+          count: tipsHistoryDetails.count,
+          value: tipsHistoryDetails.value);
+      state = state.whenData(
+          (tipsHistoryArray) => [...tipsHistoryArray, finalTipsDetails]);
+    } catch (e, st) {
+      _resetState();
+      state = AsyncValue.error(e, st);
+    }
+  }
+
   void _cacheState() {
     previousState = state;
   }

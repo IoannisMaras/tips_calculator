@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/models/staffmodel.dart';
+import 'package:tips_calculator/models/tipshistorydetailsmodel.dart';
 import 'package:tips_calculator/models/tipshistorymodel.dart';
 import 'package:tips_calculator/providers/tipshistoryprovider.dart';
 import 'package:tips_calculator/widgets/listofpayments.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
+
+import '../providers/badgeprovider.dart';
+import '../providers/historydetailsprovider.dart';
+import '../providers/staffarrayprovider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   HomePage({Key? key}) : super(key: key);

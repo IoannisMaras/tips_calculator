@@ -124,4 +124,11 @@ class DatabaseHelper {
             : [];
     return tipsHistoryDetailsArray;
   }
+
+  Future<int> addTipsHistoryDetails(
+      TipsHistoryDetailsModel tipsHistoryDetails) async {
+    Database db = await instance.databse;
+
+    return await db.insert("tipshistory_details", tipsHistoryDetails.toMap());
+  }
 }

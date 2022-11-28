@@ -23,7 +23,7 @@ class TipsHistoryDetailsModel {
   Map<String, dynamic> toMap() {
     return {
       'details_id': id,
-      'total_value': tipsHistoryId,
+      'tips_history_id': tipsHistoryId,
       'name': name,
       'count': count,
       'value': value
