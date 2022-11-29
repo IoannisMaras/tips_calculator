@@ -19,10 +19,10 @@ class HistoryDetailsValueNotifier
   Future<void> getTipsHistoryDetails(int id) async {
     _cacheState();
     try {
-      List<TipsHistoryDetailsModel> TipsHistoryDetailsArray =
+      List<TipsHistoryDetailsModel> tipsHistoryDetailsArray =
           await DatabaseHelper.instance.getTipsHistoryDetails(id);
 
-      state = AsyncData(TipsHistoryDetailsArray);
+      state = AsyncData(tipsHistoryDetailsArray);
     } catch (e, st) {
       _resetState();
       state = AsyncValue.error(e, st);
@@ -31,20 +31,20 @@ class HistoryDetailsValueNotifier
 
   Future<void> addTipsHistory(
       TipsHistoryDetailsModel tipsHistoryDetails) async {
-    _cacheState();
+    //_cacheState();
     try {
       int id = await DatabaseHelper.instance
           .addTipsHistoryDetails(tipsHistoryDetails);
-      TipsHistoryDetailsModel finalTipsDetails = TipsHistoryDetailsModel(
-          id: id,
-          tipsHistoryId: tipsHistoryDetails.tipsHistoryId,
-          name: tipsHistoryDetails.name,
-          count: tipsHistoryDetails.count,
-          value: tipsHistoryDetails.value);
-      state = state.whenData(
-          (tipsHistoryArray) => [...tipsHistoryArray, finalTipsDetails]);
+      // TipsHistoryDetailsModel finalTipsDetails = TipsHistoryDetailsModel(
+      //     id: id,
+      //     tipsHistoryId: tipsHistoryDetails.tipsHistoryId,
+      //     name: tipsHistoryDetails.name,
+      //     count: tipsHistoryDetails.count,
+      //     value: tipsHistoryDetails.value);
+      // state = state.whenData(
+      //     (tipsHistoryArray) => [...tipsHistoryArray, finalTipsDetails]);
     } catch (e, st) {
-      _resetState();
+      //_resetState();
       state = AsyncValue.error(e, st);
     }
   }
