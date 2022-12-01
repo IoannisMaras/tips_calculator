@@ -80,7 +80,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                   label: Text(check ? "Καθαρισμός" : "Επιστροφή"),
                   backgroundColor: const Color(0xFF333366),
                   foregroundColor: Colors.white,
-                  onPressed: () {},
+                  onPressed: () {
+                    if (!check) {
+                      setState(() {
+                        check = !check;
+                      });
+                    } else {
+                      ref.read(badgeValueProvider.notifier).clearAllBadges();
+                    }
+                  },
                 ),
               ),
               Expanded(child: Container()),

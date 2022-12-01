@@ -14,10 +14,10 @@ class BadgeValueNotifier extends StateNotifier<Map<int, int>> {
   void initList(List<StaffModel> staffArray) {
     Map<int, int> tempBadgeValues = {};
     for (final staff in staffArray) {
-      tempBadgeValues[staff.id as int] = 1;
+      tempBadgeValues[staff.id as int] = 0;
       //tempBadgeValues.add(BadgeValueModel(staff.id as int, 0));
     }
-    state = tempBadgeValues;
+    state = {...tempBadgeValues};
   }
 
   void incValue(int id) {
@@ -44,7 +44,16 @@ class BadgeValueNotifier extends StateNotifier<Map<int, int>> {
 
     temp.remove(badgeId);
 
-    state = temp;
+    state = {...temp};
+  }
+
+  void clearAllBadges() {
+    Map<int, int> temp = state;
+    temp.forEach((key, value) {
+      temp[key] = 0;
+    });
+
+    state = {...temp};
   }
 
   // Let's mark a todo as completed

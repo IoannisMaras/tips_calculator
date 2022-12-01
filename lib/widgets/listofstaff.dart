@@ -6,6 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../models/staffmodel.dart';
 import '../providers/badgeprovider.dart';
 import '../providers/staffarrayprovider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ListOfStaff extends ConsumerWidget {
   const ListOfStaff({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class ListOfStaff extends ConsumerWidget {
     AsyncValue<List<StaffModel>> staffProvider =
         ref.watch(staffArrayNotifierProvider);
 
-    Map<int, int> badgeValueArrayProvider = ref.watch(badgeValueProvider);
     return staffProvider.when(
       data: (staffArray) {
         return ListView.builder(
@@ -61,45 +61,55 @@ class ListOfStaff extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      Badge(
-                        toAnimate: true,
-                        animationType: BadgeAnimationType.scale,
-                        position: BadgePosition.topEnd(top: -12, end: -10),
-                        badgeContent: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Text(
-                            badgeValueArrayProvider[staffArray[index].id as int]
-                                .toString(),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                        badgeColor: const Color(0xFF333366),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              // border: Border.all(
-                              //   color: Colors.white,
-                              // ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  //minHeight: 5.0,
-                                  minWidth: 70,
-                                  //maxHeight: 30.0,
-                                  //maxWidth: 30.0,
-                                ),
-                                child: Text(
-                                  staffArray[index].name,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      color: Color(0xFF333366), fontSize: 20),
-                                )),
-                          ),
-                        ),
+                      Consumer(
+                        builder: (BuildContext context, WidgetRef ref,
+                            Widget? child) {
+                          Map<int, int> badgeValueArrayProvider =
+                              ref.watch(badgeValueProvider);
+                          return Badge(
+                            toAnimate: true,
+                            animationType: BadgeAnimationType.scale,
+                            position: BadgePosition.topEnd(top: -12, end: -10),
+                            badgeContent: Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                badgeValueArrayProvider[
+                                        staffArray[index].id as int]
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                            badgeColor: const Color(0xFF333366),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  // border: Border.all(
+                                  //   color: Colors.white,
+                                  // ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      //minHeight: 5.0,
+                                      minWidth: 70,
+                                      //maxHeight: 30.0,
+                                      //maxWidth: 30.0,
+                                    ),
+                                    child: AutoSizeText(
+                                      staffArray[index].name,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          color: Color(0xFF333366),
+                                          fontSize: 20),
+                                      maxLines: 1,
+                                    )),
+                              ),
+                            ),
+                          );
+                        },
                       )
                     ],
                   ));

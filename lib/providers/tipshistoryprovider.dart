@@ -46,7 +46,7 @@ class TipsHistoryArrayNotifier
       TipsHistoryModel finalTips = TipsHistoryModel(
           id: id, value: tipsHistory.value, date: tipsHistory.date);
       state = state
-          .whenData((tipsHistoryArray) => [...tipsHistoryArray, finalTips]);
+          .whenData((tipsHistoryArray) => [finalTips, ...tipsHistoryArray]);
       saveHistoryDetails(id, finalTips.value);
     } catch (e, st) {
       _resetState();

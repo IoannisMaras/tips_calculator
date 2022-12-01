@@ -5,6 +5,7 @@ import 'package:tips_calculator/models/tipshistorymodel.dart';
 import '../models/tipshistorydetailsmodel.dart';
 import '../providers/historydetailsprovider.dart';
 import '../providers/tipshistoryprovider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TipsHistoryPage extends StatefulWidget {
   TipsHistoryPage({Key? key}) : super(key: key);
@@ -103,31 +104,65 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
           color: Colors.white,
         ),
         Expanded(
-          child: Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-            AsyncValue<List<TipsHistoryDetailsModel>>
-                tipsHistoryDetailsProvider = ref.watch(historyDetailsProvider);
-            return tipsHistoryDetailsProvider.when(data: (historyDetailsArray) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: historyDetailsArray.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(historyDetailsArray[index].name.toString()),
-                      Text(historyDetailsArray[index].count.toString()),
-                      Text(historyDetailsArray[index].value.toString()),
-                    ],
-                  );
-                },
-              );
-            }, error: (e, st) {
-              return const Text("error");
-            }, loading: () {
-              return const Text("loading..");
-            });
-          }),
+          child: selected != -1
+              ? Consumer(builder:
+                  (BuildContext context, WidgetRef ref, Widget? child) {
+                  AsyncValue<List<TipsHistoryDetailsModel>>
+                      tipsHistoryDetailsProvider =
+                      ref.watch(historyDetailsProvider);
+
+                  return tipsHistoryDetailsProvider.when(
+                      data: (historyDetailsArray) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: historyDetailsArray.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                                child: AutoSizeText(
+                              historyDetailsArray[index].name.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 25),
+                              maxLines: 1,
+                            )),
+                            Expanded(
+                                child: AutoSizeText(
+                              historyDetailsArray[index].count.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 25),
+                              maxLines: 1,
+                            )),
+                            Expanded(
+                              child: AutoSizeText(
+                                "${historyDetailsArray[index].value.toStringAsFixed(2)}€",
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }, error: (e, st) {
+                    return const Text("error");
+                  }, loading: () {
+                    return const Text("loading..");
+                  });
+                })
+              : const Padding(
+                  padding: EdgeInsets.fromLTRB(8, 50, 8, 8),
+                  child: Text(
+                    "Επέλεξε για να δεις περισσότερα..",
+                    style: TextStyle(color: Color(0xFF333366), fontSize: 25),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
         )
       ],
     );

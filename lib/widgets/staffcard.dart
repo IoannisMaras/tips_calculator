@@ -4,6 +4,7 @@ import 'package:tips_calculator/models/staffmodel.dart';
 import 'package:tips_calculator/widgets/editstaffalert.dart';
 
 import '../providers/staffarrayprovider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class StaffCard extends ConsumerWidget {
   const StaffCard({required this.staff, required this.cardIndex});
@@ -36,10 +37,11 @@ class StaffCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
+                AutoSizeText(
                   staff.name,
                   style: const TextStyle(color: Colors.white, fontSize: 25),
                   textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
                 Text(
                   "Μονάδες :${staff.weight}",

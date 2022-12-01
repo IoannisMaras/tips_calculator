@@ -44,6 +44,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+3
   getwidget: ^3.0.1
   badges: ^2.0.3
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
