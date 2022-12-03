@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:tips_calculator/pages/homepage.dart';
@@ -78,9 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Row(
               children: [
                 const Flexible(
-                    child: Text(
+                    child: AutoSizeText(
                   "Φιλοδωρήματα ",
                   style: TextStyle(color: Color(0xFF333366)),
+                  maxLines: 1,
                 )),
                 Flexible(
                   child: Image.asset(
@@ -95,8 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.question_mark,
+                    Icons.help,
                     color: Color(0xFF333366),
+                    size: 35,
                   ))
             ],
           ),

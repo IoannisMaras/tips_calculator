@@ -20,6 +20,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 bool check = true;
 final TextEditingController _totalTips = TextEditingController();
+bool buttonActive = false;
 
 class _HomePageState extends ConsumerState<HomePage> {
   @override
@@ -41,6 +42,16 @@ class _HomePageState extends ConsumerState<HomePage> {
               Expanded(
                 child: TextField(
                   controller: _totalTips,
+                  onChanged: ((value) {
+                    if (!(_totalTips.text == "") &&
+                        double.parse(_totalTips.text) > 0) {
+                      setState(() {
+                        buttonActive = true;
+                      });
+                    } else {
+                      buttonActive = false;
+                    }
+                  }),
                   textAlign: TextAlign.center,
                   style:
                       const TextStyle(color: Color(0xFF333366), fontSize: 25),
@@ -98,23 +109,27 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: FloatingActionButton.extended(
                   icon: Icon(check ? Icons.check : Icons.save),
                   label: Text(check ? "Υπολογισμός" : "Αποθήκευση"),
-                  backgroundColor: const Color(0xFF333366),
-                  foregroundColor: Colors.white,
-                  onPressed: () {
-                    if (check) {
-                      setState(() {
-                        check = !check;
-                      });
-                    } else {
-                      ref
-                          .read(tipsHistoryArrayNotifierProvider.notifier)
-                          .addTipsHistory(TipsHistoryModel(
-                              value: _totalTips.text.isEmpty
-                                  ? 0
-                                  : double.parse(_totalTips.text),
-                              date: DateTime.now()));
-                    }
-                  },
+                  backgroundColor: buttonActive
+                      ? const Color(0xFF333366)
+                      : Colors.grey.shade800,
+                  foregroundColor: buttonActive ? Colors.white : Colors.grey,
+                  onPressed: buttonActive
+                      ? () {
+                          if (check) {
+                            setState(() {
+                              check = !check;
+                            });
+                          } else {
+                            ref
+                                .read(tipsHistoryArrayNotifierProvider.notifier)
+                                .addTipsHistory(TipsHistoryModel(
+                                    value: _totalTips.text.isEmpty
+                                        ? 0
+                                        : double.parse(_totalTips.text),
+                                    date: DateTime.now()));
+                          }
+                        }
+                      : null,
                 ),
               ),
               Expanded(child: Container()),

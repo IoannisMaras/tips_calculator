@@ -87,8 +87,9 @@ class TipsHistoryArrayNotifier
                 tipsHistoryId: tipsHistoryId,
                 name: staffArray![index].name,
                 count: int.parse(badges[staffArray![index].id].toString()),
-                value:
-                    (totalTips * (staffArray![index].weight / totalWeight))));
+                value: totalWeight == 0
+                    ? 0
+                    : (totalTips * (staffArray![index].weight / totalWeight))));
       }
     }
   }
