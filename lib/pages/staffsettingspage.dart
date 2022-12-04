@@ -40,7 +40,9 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                           padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
                           child: Row(
                             children: [
-                              Expanded(flex: 20, child: Container()),
+                              Expanded(
+                                  flex: staffArray.isEmpty ? 13 : 20,
+                                  child: Container()),
                               Expanded(
                                 flex: 16,
                                 child: FloatingActionButton.extended(
