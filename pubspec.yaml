@@ -45,6 +45,7 @@ dependencies:
   getwidget: ^3.0.1
   badges: ^2.0.3
   auto_size_text: ^3.0.0
+  tutorial_coach_mark: ^1.2.4
 
 dev_dependencies:
   flutter_test:

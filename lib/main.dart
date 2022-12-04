@@ -7,6 +7,10 @@ import 'package:tips_calculator/pages/staffsettingspage.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/pages/tipshistorypage.dart';
+import 'package:tips_calculator/providers/pageindexprovider.dart';
+import 'package:tips_calculator/utilities/coachtutorial.dart';
+
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -61,15 +65,17 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+class _MyHomePageState extends ConsumerState<MyHomePage> {
+  GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
+
+  CoachTutorial coachTutorial = CoachTutorial();
 
   @override
   Widget build(BuildContext context) {
+    int pageIndex = ref.watch(pageIndexProvider);
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -95,7 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    coachTutorial.startTutorialMode(context);
+                  },
                   icon: const Icon(
                     Icons.help,
                     color: Color(0xFF333366),
@@ -105,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: Colors.transparent,
-            key: _bottomNavigationKey,
+            key: bottomNavigationKey,
             height: 50,
             items: const <Widget>[
               Icon(
@@ -130,12 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
             onTap: (index) {
-              setState(() {
-                _page = index;
-              });
+              ref.read(pageIndexProvider.notifier).setPageIndex(index);
             },
           ),
-          body: IndexedStack(index: _page, children: [
+          body: IndexedStack(index: pageIndex, children: [
             HomePage(),
             StaffSettingsPage(),
             TipsHistoryPage(),

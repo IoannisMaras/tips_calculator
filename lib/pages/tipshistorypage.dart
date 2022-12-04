@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tips_calculator/models/tipshistorymodel.dart';
 
 import '../models/tipshistorydetailsmodel.dart';
@@ -94,7 +95,12 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
               }), error: (e, st) {
                 return const Text("error");
               }, loading: () {
-                return const Text("loading..");
+                return Center(
+                  child: LoadingAnimationWidget.threeRotatingDots(
+                    color: Colors.white,
+                    size: 100,
+                  ),
+                );
               });
             }),
           ),
@@ -125,7 +131,7 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
                               historyDetailsArray[index].name.toString(),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 25),
+                                  color: Color(0xFF333366), fontSize: 25),
                               maxLines: 1,
                             )),
                             Expanded(
@@ -133,7 +139,7 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
                               historyDetailsArray[index].count.toString(),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 25),
+                                  color: Color(0xFF333366), fontSize: 25),
                               maxLines: 1,
                             )),
                             Expanded(
@@ -141,7 +147,7 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
                                 "${historyDetailsArray[index].value.toStringAsFixed(2)}€",
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 25),
+                                    color: Color(0xFF333366), fontSize: 25),
                                 maxLines: 1,
                               ),
                             ),
@@ -152,7 +158,12 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
                   }, error: (e, st) {
                     return const Text("error");
                   }, loading: () {
-                    return const Text("loading..");
+                    return Center(
+                      child: LoadingAnimationWidget.threeRotatingDots(
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                    );
                   });
                 })
               : const Padding(

@@ -12,10 +12,12 @@ class StaffSettingsPage extends ConsumerStatefulWidget {
   StaffSettingsPage({Key? key}) : super(key: key);
 
   @override
-  _StaffSettingsPageState createState() => _StaffSettingsPageState();
+  StaffSettingsPageState createState() => StaffSettingsPageState();
 }
 
-class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
+class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
+  GlobalKey addStaffButtonKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     AsyncValue<List<StaffModel>> staffProvider =
@@ -46,6 +48,7 @@ class _StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                               Expanded(
                                 flex: 16,
                                 child: FloatingActionButton.extended(
+                                  key: addStaffButtonKey,
                                   icon: const Icon(Icons.add),
                                   label: const Text("Προσθήκη"),
                                   backgroundColor: const Color(0xFF333366),
