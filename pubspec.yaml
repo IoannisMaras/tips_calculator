@@ -46,6 +46,7 @@ dependencies:
   badges: ^2.0.3
   auto_size_text: ^3.0.0
   tutorial_coach_mark: ^1.2.4
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tips_calculator/utilities/coachtutorial.dart';
 import 'package:tips_calculator/widgets/staffcard.dart';
 
 import '../models/staffmodel.dart';
@@ -17,6 +18,7 @@ class StaffSettingsPage extends ConsumerStatefulWidget {
 
 class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
   GlobalKey addStaffButtonKey = GlobalKey();
+  static ScrollController listViewController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
             child: staffProvider.when(
               data: (staffArray) {
                 return ListView.builder(
+                    controller: listViewController,
                     itemCount: staffArray.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index < staffArray.length) {
@@ -48,7 +51,7 @@ class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                               Expanded(
                                 flex: 16,
                                 child: FloatingActionButton.extended(
-                                  key: addStaffButtonKey,
+                                  key: CoachTutorial.addStaffButton,
                                   icon: const Icon(Icons.add),
                                   label: const Text("Προσθήκη"),
                                   backgroundColor: const Color(0xFF333366),
@@ -84,6 +87,14 @@ class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
           ),
         ],
       ),
+    );
+  }
+
+  static void scrollDown() {
+    listViewController.animateTo(
+      listViewController.position.maxScrollExtent,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
     );
   }
 }
