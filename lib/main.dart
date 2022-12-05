@@ -65,10 +65,10 @@ class MyHomePage extends ConsumerStatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends ConsumerState<MyHomePage> {
+class MyHomePageState extends ConsumerState<MyHomePage> {
   GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
 
   CoachTutorial coachTutorial = CoachTutorial();
@@ -76,6 +76,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     int pageIndex = ref.watch(pageIndexProvider);
+    final CurvedNavigationBarState? navBarState =
+        bottomNavigationKey.currentState;
+    navBarState?.setPage(pageIndex);
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -102,7 +105,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             actions: [
               IconButton(
                   onPressed: () {
-                    coachTutorial.startTutorialMode(context);
+                    coachTutorial.startTutorialMode(context, ref);
                   },
                   icon: const Icon(
                     Icons.help,
