@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tips_calculator/utilities/coachtutorial.dart';
 
 import '../models/staffmodel.dart';
 import '../providers/badgeprovider.dart';
@@ -10,6 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 class ListOfStaff extends ConsumerWidget {
   const ListOfStaff({Key? key}) : super(key: key);
+  static ScrollController listViewController = ScrollController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,9 +21,13 @@ class ListOfStaff extends ConsumerWidget {
     return staffProvider.when(
       data: (staffArray) {
         return ListView.builder(
+            controller: listViewController,
             itemCount: staffArray.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
+                  key: index == staffArray.length - 1
+                      ? CoachTutorial.staffListItem
+                      : null,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
@@ -49,6 +55,9 @@ class ListOfStaff extends ConsumerWidget {
                             ),
                           ),
                           FloatingActionButton(
+                            key: index == staffArray.length - 1
+                                ? CoachTutorial.staffListPlusButton
+                                : null,
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,
                             onPressed: () => {
@@ -124,6 +133,14 @@ class ListOfStaff extends ConsumerWidget {
           size: 100,
         ),
       ),
+    );
+  }
+
+  static void scrollDown() {
+    listViewController.animateTo(
+      listViewController.position.maxScrollExtent,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
     );
   }
 }

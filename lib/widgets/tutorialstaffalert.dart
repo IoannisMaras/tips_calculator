@@ -27,7 +27,7 @@ class TutorialStaffAlertState extends State<TutorialStaffAlert> {
   void dispose() {
     _nameController.dispose();
     _weightController.dispose();
-    pageController.dispose();
+    //pageController.dispose(); Can not dispose static controller
     super.dispose();
   }
 
@@ -160,20 +160,12 @@ class TutorialStaffAlertState extends State<TutorialStaffAlert> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           FloatingActionButton.extended(
+                            key: CoachTutorial.staffCreateButton,
                             icon: const Icon(Icons.add_circle),
                             label: const Text("Δημιουργία"),
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,
-                            onPressed: () async {
-                              await ref
-                                  .read(staffArrayNotifierProvider.notifier)
-                                  .addStaff(StaffModel(
-                                      name: _nameController.text,
-                                      weight:
-                                          double.parse(_weightController.text),
-                                      iconId: _index + 1));
-                              Navigator.pop(context);
-                            },
+                            onPressed: () async {},
                           ),
                           FloatingActionButton.extended(
                             icon: const Icon(Icons.cancel),

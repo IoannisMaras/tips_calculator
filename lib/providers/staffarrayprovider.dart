@@ -28,7 +28,7 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
 
   Future<void> _retrieveStaff() async {
     await Future.delayed(const Duration(seconds: 1));
-     _cacheState();
+    _cacheState();
     try {
       final staffArray = await DatabaseHelper.instance.getAllStaffModels();
       ref.read(badgeValueProvider.notifier).initList(staffArray);
@@ -91,6 +91,24 @@ class StaffArrayNotifier extends StateNotifier<AsyncValue<List<StaffModel>>> {
       ref.read(badgeValueProvider.notifier).addBadge(staff);
       state = AsyncValue.error(e, st);
     }
+  }
+
+  Future<void> addStaffForTutorial(StaffModel staff) async {
+    _cacheState();
+    try {
+      ref.read(badgeValueProvider.notifier).addBadge(staff);
+      state = state.whenData((staffArray) => [...staffArray, staff]);
+    } catch (e, st) {
+      _resetState();
+      state = AsyncValue.error(e, st);
+    }
+  }
+
+  Future<void> removeStaffForTutorial(StaffModel staff, int id) async {
+    ref.read(badgeValueProvider.notifier).removeBadge(staff.id as int);
+    state = state.whenData(
+      (value) => value.where((element) => element.id != staff.id).toList(),
+    );
   }
 
   void _cacheState() {
