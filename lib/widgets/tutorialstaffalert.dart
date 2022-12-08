@@ -1,11 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
-
-import '../models/staffmodel.dart';
-import '../providers/staffarrayprovider.dart';
 
 class TutorialStaffAlert extends StatefulWidget {
   TutorialStaffAlert({Key? key}) : super(key: key);
@@ -189,6 +185,6 @@ class TutorialStaffAlertState extends State<TutorialStaffAlert> {
 
   static void animateToIcon() {
     pageController.animateTo(500,
-        duration: Duration(seconds: 1), curve: Curves.linear);
+        duration: const Duration(seconds: 1), curve: Curves.linear);
   }
 }

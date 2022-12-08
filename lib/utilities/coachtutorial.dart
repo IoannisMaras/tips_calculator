@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
+import 'package:tips_calculator/pages/homepage.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
 import 'package:tips_calculator/providers/staffarrayprovider.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
@@ -20,6 +21,9 @@ class CoachTutorial {
 
   static GlobalKey staffListItem = GlobalKey();
   static GlobalKey staffListPlusButton = GlobalKey();
+
+  static GlobalKey tipsTextField = GlobalKey();
+  static GlobalKey calculateButton = GlobalKey();
 
   List<TargetFocus> targetList = [];
 
@@ -46,6 +50,12 @@ class CoachTutorial {
       TargetFocus(
           keyTarget: staffListItem, contents: [], shape: ShapeLightFocus.RRect),
       TargetFocus(keyTarget: staffListPlusButton, contents: []),
+      TargetFocus(
+          keyTarget: tipsTextField, contents: [], shape: ShapeLightFocus.RRect),
+      TargetFocus(
+          keyTarget: calculateButton,
+          contents: [],
+          shape: ShapeLightFocus.RRect),
       //TargetFocus(keyTarget: settingspagekey, contents: [])
     ]);
   }
@@ -77,12 +87,17 @@ class CoachTutorial {
                   id: -1, name: "Σερβιτόρος Α", weight: 1.4, iconId: 3));
           staffHasBeenAdded = true;
           await Future.delayed(const Duration(seconds: 1));
-        } else if (targetCount == 4) {
-          ref.read(pageIndexProvider.notifier).setPageIndex(0);
-
-          Navigator.pop(context);
-
+          HomePageState.totalTips.text = 150.5.toString();
+          HomePageState.buttonActive = true;
           ListOfStaff.scrollDown();
+        } else if (targetCount == 4) {
+          Navigator.pop(context);
+          ref.read(pageIndexProvider.notifier).setPageIndex(0);
+        } else if (targetCount == 6) {
+          //prosthese ta badge
+
+        } else if (targetCount == 8) {
+          //allaje to check to homestate
         }
         targetCount++;
       },

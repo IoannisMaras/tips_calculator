@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:tips_calculator/models/tipshistorymodel.dart';
 import 'package:tips_calculator/providers/tipshistoryprovider.dart';
+import 'package:tips_calculator/utilities/coachtutorial.dart';
 import 'package:tips_calculator/widgets/listofpayments.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
 
@@ -15,12 +16,10 @@ class HomePage extends ConsumerStatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-bool check = true;
-final TextEditingController _totalTips = TextEditingController();
-bool buttonActive = false;
-
 class HomePageState extends ConsumerState<HomePage> {
-
+  static bool check = true;
+  static TextEditingController totalTips = TextEditingController();
+  static bool buttonActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +39,11 @@ class HomePageState extends ConsumerState<HomePage> {
               Expanded(child: Container()),
               Expanded(
                 child: TextField(
-                  controller: _totalTips,
+                  key: CoachTutorial.tipsTextField,
+                  controller: totalTips,
                   onChanged: ((value) {
-                    if (!(_totalTips.text == "") &&
-                        double.parse(_totalTips.text) > 0) {
+                    if (!(totalTips.text == "") &&
+                        double.parse(totalTips.text) > 0) {
                       setState(() {
                         buttonActive = true;
                       });
@@ -106,6 +106,7 @@ class HomePageState extends ConsumerState<HomePage> {
                 flex: 3,
                 //flex: 16,
                 child: FloatingActionButton.extended(
+                  key: CoachTutorial.calculateButton,
                   icon: Icon(check ? Icons.check : Icons.save),
                   label: Text(check ? "Υπολογισμός" : "Αποθήκευση"),
                   backgroundColor: buttonActive
@@ -122,9 +123,9 @@ class HomePageState extends ConsumerState<HomePage> {
                             ref
                                 .read(tipsHistoryArrayNotifierProvider.notifier)
                                 .addTipsHistory(TipsHistoryModel(
-                                    value: _totalTips.text.isEmpty
+                                    value: totalTips.text.isEmpty
                                         ? 0
-                                        : double.parse(_totalTips.text),
+                                        : double.parse(totalTips.text),
                                     date: DateTime.now()));
                           }
                         }
@@ -142,12 +143,13 @@ class HomePageState extends ConsumerState<HomePage> {
                   ? const ListOfStaff()
                   : Container(
                       color: const Color(0xFF333366),
-                      child: ListOfPayments(_totalTips.text.isEmpty
+                      child: ListOfPayments(totalTips.text.isEmpty
                           ? 0
-                          : double.parse(_totalTips.text)),
+                          : double.parse(totalTips.text)),
                     )),
         )
       ],
     );
   }
+
 }

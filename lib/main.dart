@@ -10,7 +10,6 @@ import 'package:tips_calculator/pages/tipshistorypage.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
 
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

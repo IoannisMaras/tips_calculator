@@ -93,7 +93,7 @@ class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
   static void scrollDown() {
     listViewController.animateTo(
       listViewController.position.maxScrollExtent,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 1),
       curve: Curves.fastOutSlowIn,
     );
   }

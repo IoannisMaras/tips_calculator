@@ -139,7 +139,7 @@ class ListOfStaff extends ConsumerWidget {
   static void scrollDown() {
     listViewController.animateTo(
       listViewController.position.maxScrollExtent,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 100),
       curve: Curves.fastOutSlowIn,
     );
   }
