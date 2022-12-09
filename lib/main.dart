@@ -10,7 +10,6 @@ import 'package:tips_calculator/pages/tipshistorypage.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -70,10 +69,9 @@ class MyHomePage extends ConsumerStatefulWidget {
 class MyHomePageState extends ConsumerState<MyHomePage> {
   GlobalKey<CurvedNavigationBarState> bottomNavigationKey = GlobalKey();
 
-  CoachTutorial coachTutorial = CoachTutorial();
-
   @override
   Widget build(BuildContext context) {
+    CoachTutorial coachTutorial = CoachTutorial();
     int pageIndex = ref.watch(pageIndexProvider);
     final CurvedNavigationBarState? navBarState =
         bottomNavigationKey.currentState;
