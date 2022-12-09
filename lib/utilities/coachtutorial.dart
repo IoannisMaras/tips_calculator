@@ -1,19 +1,21 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 import 'package:tips_calculator/pages/homepage.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
+import 'package:tips_calculator/providers/savecheckprovider.dart';
 import 'package:tips_calculator/providers/staffarrayprovider.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
 import 'package:tips_calculator/widgets/tutorialstaffalert.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../pages/staffsettingspage.dart';
+import '../providers/calculateactiveprovider.dart';
 
 class CoachTutorial {
   static GlobalKey<CurvedNavigationBarState> addStaffButton = GlobalKey();
+
   static GlobalKey iconPicker = GlobalKey();
   static GlobalKey staffNameTextField = GlobalKey();
   static GlobalKey staffWeightTextField = GlobalKey();
@@ -24,6 +26,10 @@ class CoachTutorial {
 
   static GlobalKey tipsTextField = GlobalKey();
   static GlobalKey calculateButton = GlobalKey();
+
+  static GlobalKey paymentCard = GlobalKey();
+  static GlobalKey paymentName = GlobalKey();
+  static GlobalKey paymentTotal = GlobalKey();
 
   List<TargetFocus> targetList = [];
 
@@ -56,6 +62,12 @@ class CoachTutorial {
           keyTarget: calculateButton,
           contents: [],
           shape: ShapeLightFocus.RRect),
+      TargetFocus(
+          keyTarget: paymentCard, contents: [], shape: ShapeLightFocus.RRect),
+      TargetFocus(
+          keyTarget: paymentName, contents: [], shape: ShapeLightFocus.RRect),
+      TargetFocus(
+          keyTarget: paymentTotal, contents: [], shape: ShapeLightFocus.RRect),
       //TargetFocus(keyTarget: settingspagekey, contents: [])
     ]);
   }
@@ -88,16 +100,18 @@ class CoachTutorial {
           staffHasBeenAdded = true;
           await Future.delayed(const Duration(seconds: 1));
           HomePageState.totalTips.text = 150.5.toString();
-          HomePageState.buttonActive = true;
+
           ListOfStaff.scrollDown();
         } else if (targetCount == 4) {
           Navigator.pop(context);
           ref.read(pageIndexProvider.notifier).setPageIndex(0);
         } else if (targetCount == 6) {
           //prosthese ta badge
-
+          ref
+              .read(calculateActiveProvider.notifier)
+              .changeCalculateActiveTo(true);
         } else if (targetCount == 8) {
-          //allaje to check to homestate
+          ref.read(checkProvider.notifier).changeCheck();
         }
         targetCount++;
       },

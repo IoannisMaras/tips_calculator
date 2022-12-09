@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:tips_calculator/utilities/coachtutorial.dart';
 
 import '../models/staffmodel.dart';
 import '../providers/badgeprovider.dart';
@@ -32,6 +33,9 @@ class ListOfPayments extends ConsumerWidget {
                       Expanded(
                           flex: 5,
                           child: Container(
+                            key: index == staffArray.length - 1
+                                ? CoachTutorial.paymentCard
+                                : null,
                             decoration: const BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(
@@ -44,12 +48,18 @@ class ListOfPayments extends ConsumerWidget {
                               child: Column(
                                 children: [
                                   Text(
+                                    key: index == staffArray.length - 1
+                                        ? CoachTutorial.paymentName
+                                        : null,
                                     staffArray[index].name,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         color: Color(0xFF333366), fontSize: 20),
                                   ),
                                   Text(
+                                    key: index == staffArray.length - 1
+                                        ? CoachTutorial.paymentTotal
+                                        : null,
                                     (badgeValueArrayProvider[
                                                     staffArray[index].id as int]
                                                 as int) ==

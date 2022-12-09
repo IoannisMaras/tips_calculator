@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:tips_calculator/models/tipshistorymodel.dart';
+import 'package:tips_calculator/providers/calculateactiveprovider.dart';
+import 'package:tips_calculator/providers/savecheckprovider.dart';
 import 'package:tips_calculator/providers/tipshistoryprovider.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
 import 'package:tips_calculator/widgets/listofpayments.dart';
@@ -17,12 +19,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
-  static bool check = true;
   static TextEditingController totalTips = TextEditingController();
-  static bool buttonActive = false;
 
   @override
   Widget build(BuildContext context) {
+    bool check = ref.watch(checkProvider);
+    bool buttonActive = ref.watch(calculateActiveProvider);
     return Column(
       children: [
         const Padding(
@@ -44,11 +46,13 @@ class HomePageState extends ConsumerState<HomePage> {
                   onChanged: ((value) {
                     if (!(totalTips.text == "") &&
                         double.parse(totalTips.text) > 0) {
-                      setState(() {
-                        buttonActive = true;
-                      });
+                      ref
+                          .read(calculateActiveProvider.notifier)
+                          .changeCalculateActiveTo(true);
                     } else {
-                      buttonActive = false;
+                      ref
+                          .read(calculateActiveProvider.notifier)
+                          .changeCalculateActiveTo(false);
                     }
                   }),
                   textAlign: TextAlign.center,
@@ -92,9 +96,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   foregroundColor: Colors.white,
                   onPressed: () {
                     if (!check) {
-                      setState(() {
-                        check = !check;
-                      });
+                      ref.read(checkProvider.notifier).changeCheck();
                     } else {
                       ref.read(badgeValueProvider.notifier).clearAllBadges();
                     }
@@ -116,9 +118,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   onPressed: buttonActive
                       ? () {
                           if (check) {
-                            setState(() {
-                              check = !check;
-                            });
+                            ref.read(checkProvider.notifier).changeCheck();
                           } else {
                             ref
                                 .read(tipsHistoryArrayNotifierProvider.notifier)
@@ -151,5 +151,4 @@ class HomePageState extends ConsumerState<HomePage> {
       ],
     );
   }
-
 }
