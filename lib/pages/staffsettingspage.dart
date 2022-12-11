@@ -4,6 +4,7 @@ import 'package:tips_calculator/utilities/coachtutorial.dart';
 import 'package:tips_calculator/widgets/staffcard.dart';
 
 import '../models/staffmodel.dart';
+import '../providers/anyalertopenprovider.dart';
 import '../providers/staffarrayprovider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -57,6 +58,9 @@ class StaffSettingsPageState extends ConsumerState<StaffSettingsPage> {
                                   backgroundColor: const Color(0xFF333366),
                                   foregroundColor: Colors.white,
                                   onPressed: () {
+                                    ref
+                                        .read(anyAlertOpenProvider.notifier)
+                                        .state = true;
                                     showDialog(
                                       barrierDismissible: false,
                                       context: context,

@@ -168,9 +168,7 @@ class TutorialStaffAlertState extends State<TutorialStaffAlert> {
                             label: const Text("Ακυρωση"),
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/staffmodel.dart';
+import '../providers/anyalertopenprovider.dart';
 import '../providers/staffarrayprovider.dart';
 
 class EditStaffAlert extends StatefulWidget {
@@ -150,6 +151,9 @@ class _EditStaffAlertState extends State<EditStaffAlert> {
                                       weight:
                                           double.parse(_weightController.text),
                                       iconId: _index + 1));
+                                      ref
+                                        .read(anyAlertOpenProvider.notifier)
+                                        .state = false;
                               Navigator.pop(context);
                             },
                           ),
@@ -159,6 +163,9 @@ class _EditStaffAlertState extends State<EditStaffAlert> {
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             onPressed: () {
+                              ref
+                                        .read(anyAlertOpenProvider.notifier)
+                                        .state = false;
                               Navigator.pop(context);
                             },
                           ),

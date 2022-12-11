@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 import 'package:tips_calculator/widgets/editstaffalert.dart';
 
+import '../providers/anyalertopenprovider.dart';
 import '../providers/staffarrayprovider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -55,6 +56,9 @@ class StaffCard extends ConsumerWidget {
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
                       onPressed: () => {
+                        ref
+                                        .read(anyAlertOpenProvider.notifier)
+                                        .state = true,
                         showDialog(
                           barrierDismissible: false,
                           context: context,

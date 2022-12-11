@@ -11,6 +11,7 @@ import 'package:tips_calculator/widgets/tutorialstaffalert.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../pages/staffsettingspage.dart';
+import '../providers/anyalertopenprovider.dart';
 import '../providers/calculateactiveprovider.dart';
 
 class CoachTutorial {
@@ -40,12 +41,15 @@ class CoachTutorial {
         ref.read(staffArrayNotifierProvider).hasError) {
       return;
     }
+    if (ref.read(anyAlertOpenProvider.notifier).state) {
+      Navigator.pop(context);
+    }
     fillTargetList(ref);
     bool isdoubletap = false;
 
     ref.read(pageIndexProvider.notifier).setPageIndex(1);
     StaffSettingsPageState.scrollDown();
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 50));
 
     bool alertIsOpen = false;
     bool staffHasBeenAdded = false;
