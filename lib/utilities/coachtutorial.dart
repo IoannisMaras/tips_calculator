@@ -47,6 +47,7 @@ class CoachTutorial {
     StaffSettingsPageState.scrollDown();
     await Future.delayed(const Duration(seconds: 1));
 
+    bool alertIsOpen = false;
     bool staffHasBeenAdded = false;
 
     TutorialCoachMark(
@@ -62,6 +63,7 @@ class CoachTutorial {
               return TutorialStaffAlert();
             },
           );
+          alertIsOpen = true;
         } else if (isdoubletap && target.keyTarget == iconPicker) {
           isdoubletap = !isdoubletap;
 
@@ -79,6 +81,7 @@ class CoachTutorial {
           isdoubletap = !isdoubletap;
 
           Navigator.pop(context);
+          alertIsOpen = false;
           ref.read(pageIndexProvider.notifier).setPageIndex(0);
         } else if (isdoubletap && target.keyTarget == staffListPlusButton) {
           isdoubletap = !isdoubletap;
@@ -97,12 +100,18 @@ class CoachTutorial {
               StaffModel(id: -1, name: "Σερβιτόρος Α", weight: 1.4, iconId: 3),
               -1);
         }
+        if (alertIsOpen) {
+          Navigator.pop(context);
+        }
       },
       onSkip: () {
         if (staffHasBeenAdded) {
           ref.read(staffArrayNotifierProvider.notifier).removeStaffForTutorial(
               StaffModel(id: -1, name: "Σερβιτόρος Α", weight: 1.4, iconId: 3),
               -1);
+        }
+        if (alertIsOpen) {
+          Navigator.pop(context);
         }
       },
     ).show(context: context);
@@ -126,7 +135,7 @@ class CoachTutorial {
                 height: staffArrayLength < 2 ? 100 : 0,
               ),
               const Text(
-                "Multiples content",
+                "Προσθήκη Θέσης",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -135,7 +144,7 @@ class CoachTutorial {
               const Padding(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.",
+                  "Ας αρχίσουμε προσθέτοντας μια θέση του καταστήματος και να δούμε τι επιλογές έχουμε για αυτή την θέση",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -148,32 +157,263 @@ class CoachTutorial {
       ]),
       TargetFocus(
         keyTarget: iconPicker,
-        contents: [],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const <Widget>[
+                Text(
+                  "Εικόνα Θέσης",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "Κάνοντας scroll μπορούμε να διαλέξουμε μια από τις διαθέσιμες εικόνες που αντιπροσωπεύουν καλύτερα την θέση που θέλουμε να δημιουργήσουμε",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
         shape: ShapeLightFocus.RRect,
       ),
       TargetFocus(
           keyTarget: staffNameTextField,
-          contents: [],
+          contents: [
+            TargetContent(
+              align: ContentAlign.bottom,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Όνομα Θέσης",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Συμπληρώνουμε το όνομα της θέσης που θέλουμε να δημιουργήσουμε",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
           shape: ShapeLightFocus.RRect),
       TargetFocus(
           keyTarget: staffWeightTextField,
-          contents: [],
+          contents: [
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Μονάδες Θέσης",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Και τέλος τις μονάδες της θέσεις. Όσες περισσότερες μονάδες έχει μια θέση τόσο μεγαλύτερο είναι το ποσοστό που θα παίρνει",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
           shape: ShapeLightFocus.RRect),
       TargetFocus(
           keyTarget: staffCreateButton,
-          contents: [],
+          contents: [
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Δημιουργία Θέσης",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Αφού έχουμε συμπληρώσει το όνομα και τις μονάδες πατάμε το κουμπί «Δημιουργία» για να προσθέσουμε την θέση",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
           shape: ShapeLightFocus.RRect),
       TargetFocus(
-          keyTarget: staffListItem, contents: [], shape: ShapeLightFocus.RRect),
-      TargetFocus(keyTarget: staffListPlusButton, contents: []),
+          keyTarget: staffListItem,
+          contents: [
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Η Καινούρια Θέση",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Εδώ φαίνεται μια καινούρια θέση με όνομα Σερβιτόρος Α και μονάδες 2.0",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+          shape: ShapeLightFocus.RRect),
+      TargetFocus(keyTarget: staffListPlusButton, contents: [
+        TargetContent(
+          align: ContentAlign.top,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const <Widget>[
+              Text(
+                "Πλήθος της Θέσης",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20.0),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "Πατώντας το κουμπί «+» ή «-» αντίστοιχα , αυξομειώνουμε το πλήθος των ατόμων που θα μοιραστούν τα φιλοδωρήματα",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        )
+      ]),
       TargetFocus(
-          keyTarget: tipsTextField, contents: [], shape: ShapeLightFocus.RRect),
+          keyTarget: tipsTextField,
+          contents: [
+            TargetContent(
+              align: ContentAlign.bottom,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Συνολικό Ποσό",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Συμπληρώνουμε το συνολικό ποσό φιλοδωρημάτων που θα μοιραστεί σε όλες τις θέσεις",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+          shape: ShapeLightFocus.RRect),
       TargetFocus(
           keyTarget: calculateButton,
-          contents: [],
+          contents: [
+            TargetContent(
+              align: ContentAlign.bottom,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Υπολογισμός",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Και πατώντας το κουμπί υπολογισμός, η εφαρμογή θα μας εμφανίσει αναλυτικά το ποσό που αναλογεί στον καθένα από την εκάστοτε θέση",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
           shape: ShapeLightFocus.RRect),
       TargetFocus(
-          keyTarget: paymentCard, contents: [], shape: ShapeLightFocus.RRect),
+          keyTarget: paymentCard,
+          contents: [
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Αναλυτικά",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Μπορούμε να δούμε πλέον το ποσό που δικαιούται ο κάθε Σερβιτόρος Α",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+          shape: ShapeLightFocus.RRect),
       TargetFocus(
           keyTarget: paymentName, contents: [], shape: ShapeLightFocus.RRect),
       TargetFocus(
