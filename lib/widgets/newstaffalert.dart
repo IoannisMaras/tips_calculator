@@ -14,6 +14,8 @@ class NewStaffAlert extends StatefulWidget {
 }
 
 class _NewStaffAlertState extends State<NewStaffAlert> {
+  bool newButtonActive = false;
+
   int _index = 0;
 
   final TextEditingController _nameController = TextEditingController();
@@ -83,6 +85,19 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextField(
+                        onChanged: (value) {
+                          if (!newButtonActive &&
+                              value.isNotEmpty &&
+                              _weightController.text.isNotEmpty) {
+                            setState(() {
+                              newButtonActive = true;
+                            });
+                          } else {
+                            setState(() {
+                              newButtonActive = false;
+                            });
+                          }
+                        },
                         controller: _nameController,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -97,6 +112,19 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextField(
+                        onChanged: (value) {
+                          if (!newButtonActive &&
+                              value.isNotEmpty &&
+                              _nameController.text.isNotEmpty) {
+                            setState(() {
+                              newButtonActive = true;
+                            });
+                          } else {
+                            setState(() {
+                              newButtonActive = false;
+                            });
+                          }
+                        },
                         controller: _weightController,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
@@ -129,9 +157,13 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                           FloatingActionButton.extended(
                             icon: const Icon(Icons.add_circle),
                             label: const Text("Δημιουργία"),
-                            backgroundColor: Colors.green,
+                            backgroundColor:
+                                newButtonActive ? Colors.green : Colors.grey,
                             foregroundColor: Colors.white,
                             onPressed: () async {
+                              if (!newButtonActive) {
+                                return;
+                              }
                               await ref
                                   .read(staffArrayNotifierProvider.notifier)
                                   .addStaff(StaffModel(
@@ -139,11 +171,9 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                                       weight:
                                           double.parse(_weightController.text),
                                       iconId: _index + 1));
-                                       ref
-                                        .read(anyAlertOpenProvider.notifier)
-                                        .state = false;
+                              ref.read(anyAlertOpenProvider.notifier).state =
+                                  false;
                               Navigator.pop(context);
-                             
                             },
                           ),
                           FloatingActionButton.extended(
@@ -152,9 +182,8 @@ class _NewStaffAlertState extends State<NewStaffAlert> {
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             onPressed: () {
-                              ref
-                                        .read(anyAlertOpenProvider.notifier)
-                                        .state = false;
+                              ref.read(anyAlertOpenProvider.notifier).state =
+                                  false;
                               Navigator.pop(context);
                             },
                           ),

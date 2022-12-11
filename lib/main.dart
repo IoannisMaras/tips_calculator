@@ -9,9 +9,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/pages/tipshistorypage.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(
     const ProviderScope(
