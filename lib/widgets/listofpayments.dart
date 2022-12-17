@@ -9,6 +9,7 @@ import '../providers/badgeprovider.dart';
 import '../providers/staffarrayprovider.dart';
 
 class ListOfPayments extends ConsumerWidget {
+  static ScrollController listViewController = ScrollController();
   final double totalTips;
   const ListOfPayments(this.totalTips, {Key? key}) : super(key: key);
 
@@ -23,6 +24,7 @@ class ListOfPayments extends ConsumerWidget {
         double totalWeight =
             calculateTotalWeight(staffArray, badgeValueArrayProvider);
         return ListView.builder(
+            controller: listViewController,
             itemCount: staffArray.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
@@ -98,5 +100,17 @@ class ListOfPayments extends ConsumerWidget {
       totalWeight += staff.weight * badgeArray[staff.id as int]!;
     }
     return totalWeight;
+  }
+
+  static void scrollDown() {
+    if (listViewController.hasClients) {
+      listViewController.animateTo(
+        listViewController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.fastOutSlowIn,
+      );
+    } else {
+      print("listViewController has no clients");
+    }
   }
 }

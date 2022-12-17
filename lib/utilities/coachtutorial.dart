@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tips_calculator/models/staffmodel.dart';
 import 'package:tips_calculator/pages/homepage.dart';
+import 'package:tips_calculator/providers/badgeprovider.dart';
 import 'package:tips_calculator/providers/pageindexprovider.dart';
 import 'package:tips_calculator/providers/savecheckprovider.dart';
 import 'package:tips_calculator/providers/staffarrayprovider.dart';
@@ -13,6 +14,7 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../pages/staffsettingspage.dart';
 import '../providers/anyalertopenprovider.dart';
 import '../providers/calculateactiveprovider.dart';
+import '../widgets/listofpayments.dart';
 
 class CoachTutorial {
   static GlobalKey<CurvedNavigationBarState> addStaffButton = GlobalKey();
@@ -77,6 +79,11 @@ class CoachTutorial {
               .addStaffForTutorial(StaffModel(
                   id: -1, name: "Σερβιτόρος Α", weight: 1.4, iconId: 3));
           staffHasBeenAdded = true;
+
+          ref.read(checkProvider.notifier).changeCheckToTrue();
+          ref
+              .read(calculateActiveProvider.notifier)
+              .changeCalculateActiveTo(false);
           await Future.delayed(const Duration(seconds: 1));
           HomePageState.totalTips.text = 150.5.toString();
 
@@ -93,9 +100,13 @@ class CoachTutorial {
           ref
               .read(calculateActiveProvider.notifier)
               .changeCalculateActiveTo(true);
+
+          ref.read(badgeValueProvider.notifier).setRandomBadges();
         } else if (!isdoubletap && target.keyTarget == calculateButton) {
           isdoubletap = !isdoubletap;
-          ref.read(checkProvider.notifier).changeCheck();
+          ref.read(checkProvider.notifier).changeCheckToFalse();
+          await Future.delayed(Duration(milliseconds: 500));
+          ListOfPayments.scrollDown();
         }
       },
       onFinish: () {
@@ -107,6 +118,9 @@ class CoachTutorial {
         if (alertIsOpen) {
           Navigator.pop(context);
         }
+        ref.read(badgeValueProvider.notifier).clearAllBadges();
+        HomePageState.totalTips.text = "";
+        ref.read(checkProvider.notifier).changeCheckToTrue();
       },
       onSkip: () {
         if (staffHasBeenAdded) {
@@ -117,6 +131,9 @@ class CoachTutorial {
         if (alertIsOpen) {
           Navigator.pop(context);
         }
+        ref.read(badgeValueProvider.notifier).clearAllBadges();
+        HomePageState.totalTips.text = "";
+        ref.read(checkProvider.notifier).changeCheckToTrue();
       },
     ).show(context: context);
   }

@@ -96,7 +96,7 @@ class HomePageState extends ConsumerState<HomePage> {
                   foregroundColor: Colors.white,
                   onPressed: () {
                     if (!check) {
-                      ref.read(checkProvider.notifier).changeCheck();
+                      ref.read(checkProvider.notifier).changeCheckToTrue();
                     } else {
                       ref.read(badgeValueProvider.notifier).clearAllBadges();
                     }
@@ -118,7 +118,9 @@ class HomePageState extends ConsumerState<HomePage> {
                   onPressed: buttonActive
                       ? () {
                           if (check) {
-                            ref.read(checkProvider.notifier).changeCheck();
+                            ref
+                                .read(checkProvider.notifier)
+                                .changeCheckToFalse();
                           } else {
                             ref
                                 .read(tipsHistoryArrayNotifierProvider.notifier)
@@ -151,4 +153,5 @@ class HomePageState extends ConsumerState<HomePage> {
       ],
     );
   }
+
 }

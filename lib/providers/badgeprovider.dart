@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/staffmodel.dart';
+import 'dart:math';
 
 final badgeValueProvider =
     StateNotifierProvider<BadgeValueNotifier, Map<int, int>>((ref) {
@@ -56,10 +57,16 @@ class BadgeValueNotifier extends StateNotifier<Map<int, int>> {
     state = {...temp};
   }
 
-  // Let's mark a todo as completed
+  //used for tutorial
+  void setRandomBadges() {
+    var rng = Random();
+    Map<int, int> temp = state;
 
+
+    temp.forEach((key, value) {
+      temp[key] = 1 + rng.nextInt(4);
+    });
+
+    state = {...temp};
+  }
 }
-
-// Finally, we are using StateNotifierProvider to allow the UI to interact with
-// our TodosNotifier class.
-

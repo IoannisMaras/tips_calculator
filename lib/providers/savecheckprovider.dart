@@ -7,7 +7,11 @@ final checkProvider = StateNotifierProvider<CheckNotifier, bool>((ref) {
 class CheckNotifier extends StateNotifier<bool> {
   CheckNotifier() : super(true);
 
-  void changeCheck() {
-    state = !state;
+  void changeCheckToTrue() {
+    state = true;
+  }
+
+  void changeCheckToFalse() {
+    state = false;
   }
 }
