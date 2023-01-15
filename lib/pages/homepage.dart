@@ -8,6 +8,7 @@ import 'package:tips_calculator/providers/tipshistoryprovider.dart';
 import 'package:tips_calculator/utilities/coachtutorial.dart';
 import 'package:tips_calculator/widgets/listofpayments.dart';
 import 'package:tips_calculator/widgets/listofstaff.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../providers/badgeprovider.dart';
 
@@ -129,6 +130,24 @@ class HomePageState extends ConsumerState<HomePage> {
                                         ? 0
                                         : double.parse(totalTips.text),
                                     date: DateTime.now()));
+                            final snackBar = SnackBar(
+                              /// need to set following properties for best effect of awesome_snackbar_content
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: 'Επιτυχία Αποθήκευσης!',
+                                message:
+                                    'Τώρα μπορείς να βλέπεις τις προηγούμενες ημέρες στην 3η καρτέτα της εφαρμογής.',
+
+                                /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                contentType: ContentType.success,
+                              ),
+                            );
+
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
                           }
                         }
                       : null,
@@ -153,5 +172,4 @@ class HomePageState extends ConsumerState<HomePage> {
       ],
     );
   }
-
 }

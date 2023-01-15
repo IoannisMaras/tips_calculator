@@ -34,8 +34,6 @@ class _TipsHistoryPageState extends State<TipsHistoryPage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    //attention
-
                     shrinkWrap: true,
                     itemCount: tipsHistoryArray.length,
                     itemBuilder: (context, index) {

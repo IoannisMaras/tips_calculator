@@ -435,11 +435,11 @@ class CoachTutorial {
             )
           ],
           shape: ShapeLightFocus.RRect),
-      TargetFocus(
-          keyTarget: paymentName, contents: [], shape: ShapeLightFocus.RRect),
-      TargetFocus(
-          keyTarget: paymentTotal, contents: [], shape: ShapeLightFocus.RRect),
-      //TargetFocus(keyTarget: settingspagekey, contents: [])
+      // TargetFocus(
+      //     keyTarget: paymentName, contents: [], shape: ShapeLightFocus.RRect),
+      // TargetFocus(
+      //     keyTarget: paymentTotal, contents: [], shape: ShapeLightFocus.RRect),
+      // //TargetFocus(keyTarget: settingspagekey, contents: [])
     ]);
   }
 }
